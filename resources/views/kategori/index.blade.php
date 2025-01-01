@@ -3,25 +3,34 @@
 @section('content')
 <section class="content">
     <h2>Daftar Kategori Barang</h2>
-    <a href="add-item.html" class="btn-primary">Tambah Baru</a>
+
+    <a href="{{ route('form.kategori.tambah') }}" class="btn-primary">Tambah Baru</a>
+
     <table style="margin-top: 30px">
       <thead>
         <tr>
-          <th>ID</th>
+          <th>No</th>
           <th>Nama</th>
           <th>Aksi</th>
         </tr>
       </thead>
       <tbody>
+        @foreach ($semua_kategori as $kategori)
         <tr>
-          <td>1</td>
-          <td>Laptop</td>
+          <td>{{ $loop->iteration }}</td>
+          <td>{{ $kategori->nama }}</td>
           <td>
-            <button class="btn-edit">Edit</button>
-            <button class="btn-delete">Hapus</button>
+            <form action="{{ route('kategori.hapus', $kategori->id) }}" method="POST">
+              <a href="{{ route('form.kategori.perbarui', $kategori->id) }}" style="text-decoration: none;" class="btn-edit">Edit</a>
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="btn-delete" onclick="return confirm('Yakin Mau Hapus?')" style="padding-top: 2%;">Hapus</button>
+            </form>
           </td>
         </tr>
+        @endforeach
       </tbody>
     </table>
-</section>
+  </section>
+
 @endsection
